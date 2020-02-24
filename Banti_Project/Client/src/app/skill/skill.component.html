@@ -1,0 +1,23 @@
+<div *ngIf="skills.length != 0; else noSkills">
+    <table border='1'>
+        <tr>
+            <th>SNO</th>
+            <th>Name</th>
+            <th>Delete (?) </th>
+        </tr>
+        <tr *ngFor="let skill of skills">
+            <td><a href="#" (click)="readSkill(skill.id)"> {{skill.id}} </a></td>
+            <td>{{skill.name}} </td>
+            <td><a href="#" (click)="deleteSkill(skill.id)"> Delete </a></td>
+        </tr>
+    </table>
+</div>
+<ng-template #noSkills>No Skills</ng-template>
+
+<form [formGroup]="skillForm" (ngSubmit)="saveSkill()">
+    Name: <input type="text" formControlName="name" />
+    <span *ngIf="name.touched && name.invalid">
+        Name is required one
+    </span> <br />
+    <input type="submit" value="submit" />
+</form>
