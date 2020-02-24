@@ -1,0 +1,70 @@
+<div *ngIf="recruiterCorrespondences.length != 0; else noRecruiterCorrespondences">
+    <table border='1'>
+        <tr>
+            <th>SNO</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>MobileNumber</th>
+            <th>EmailId</th>
+            <th>RecoverAvailable</th>           
+            <th>RecruiterId</th>        
+            <th>Delete</th>
+        </tr>
+        <tr *ngFor="let recruiterCorrespondence of recruiterCorrespondences">
+            <td>
+                <a href="#" (click)="readRecruiterCorrespondence(recruiterCorrespondence.id)">
+                    {{recruiterCorrespondence.id}}
+                </a>
+            </td>            
+            <td>{{recruiterCorrespondence.firstName}}</td>
+            <td>{{recruiterCorrespondence.lastName}}</td>
+            <td>{{recruiterCorrespondence.mobileNumber}}</td>
+            <td>{{recruiterCorrespondence.emailId}}</td>
+            <td>{{recruiterCorrespondence.recoverAvailable}}</td> 
+            <td>{{recruiterCorrespondence.recruiter.nameOfOrganization}}</td>       
+            <td>
+                <a href="#" (click)="deleteRecruiterCorrespondence(recruiterCorrespondence.id)">
+                    Delete{{recruiterCorrespondence.id}}
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<ng-template #noRecruiterCorrespondences>No RecruiterCorrespondences</ng-template>
+<form [formGroup]="recruiterCorrespondenceForm" (ngSubmit)="saveRecruiterCorrespondence()">
+    First Name: <input type="text" formControlName="firstName"/>
+    <span *ngIf="firstName.touched && firstName.invalid">
+        firstName is required one
+    </span> <br/>
+    Last Name: <input type="text" formControlName="lastName"/>
+    <span *ngIf="lastName.touched && lastName.invalid">
+        lastName is required one
+    </span> <br/>
+    MobileNumber: <input type="text" formControlName="mobileNumber"/>
+    <span *ngIf="mobileNumber.touched && mobileNumber.invalid">
+        websiteUrl is required one
+    </span> <br/>
+    Email: <input type="text" formControlName="emailId"/>
+    <span *ngIf="emailId.touched && emailId.invalid">
+        emailId is required one
+    </span> <br/>
+    RecoverAvailable:<input type="radio" formControlName="recoverAvailable" [value]="true"/>Yes &nbsp;
+<input type="radio" formControlName="recoverAvailable" [value]="false"/>No &nbsp;
+<span *ngIf="recoverAvailable.invalid">
+    recoverAvailable is required one 
+</span> <br/>
+<div formGroupName="recruiter">
+    Recruiters:
+    <select formControlName="id">
+        <option value="">Please select</option>
+        <option *ngFor="let recruiter of recruiters" [value]="recruiter.id">
+          {{recruiter.nameOfOrganization}}
+        </option>
+    </select> 
+    <span *ngIf="recruiterId.touched && recruiterId.invalid">
+        recruiterId is required one 
+    </span> <br/>
+</div>
+    <input type="submit" value="submit"/>
+</form>

@@ -1,0 +1,70 @@
+<div *ngIf="recruiterContacts.length != 0; else noRecruiterContacts">
+    <table border='1'>
+        <tr>  
+            <th>SNO</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>MobileNumber</th>
+            <th>Email</th>
+            <th>Designation</th>
+	        <th>RecruiterId</th>          
+            <th>Delete</th>
+        </tr>
+        <tr *ngFor="let recruiterContact of recruiterContacts">
+            <td>
+                <a href="#" (click)="readRecruiterContact(recruiterContact.id)">
+                    {{recruiterContact.id}}
+                </a>
+            </td>            
+            <td>{{recruiterContact.firstName}}</td>
+            <td>{{recruiterContact.lastName}}</td>
+            <td>{{recruiterContact.mobileNumber}}</td>
+            <td>{{recruiterContact.emailId}}</td>
+            <td>{{recruiterContact.designation}}</td>            
+            <td>{{recruiterContact.recruiter.nameOfOrganization}}</td>              
+            <td>
+                <a href="#" (click)="deleteRecruiterContact(recruiterContact.id)">
+                    Delete{{recruiterContact.id}}
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+<ng-template #noRecruiterContacts>No RecruiterContacts</ng-template>
+<form [formGroup]="recruiterContactForm" (ngSubmit)="saveRecruiterContact()">
+    First Name: <input type="text" formControlName="firstName"/>
+    <span *ngIf="firstName.touched && firstName.invalid">
+        firstName is required one
+    </span> <br/>
+    LastName: <input type="text" formControlName="lastName"/>
+    <span *ngIf="lastName.touched && lastName.invalid">
+        lastName is required one
+    </span> <br/>
+    MobileNumber: <input type="text" formControlName="mobileNumber"/>
+    <span *ngIf="mobileNumber.touched && mobileNumber.invalid">
+        mobileNumber is required one
+    </span> <br/>
+    Email: <input type="text" formControlName="emailId"/>
+    <span *ngIf="emailId.touched && emailId.invalid">
+        emailId is required one
+    </span> <br/>    
+    Designation: <input type="text" formControlName="designation"/>
+    <span *ngIf="designation.touched && designation.invalid">
+        designation is required one.
+    </span> <br/>    
+
+  
+    <div formGroupName="recruiter">
+        Recruiters:
+        <select formControlName="id">
+            <option value="">Please select</option>
+            <option *ngFor="let recruiter of recruiters" [value]="recruiter.id">
+              {{recruiter.nameOfOrganization}}
+            </option>
+        </select> 
+        <span *ngIf="recruiterId.touched && recruiterId.invalid">
+            recruiterId is required one 
+        </span> <br/>
+    </div>
+    <input type="submit" value="submit"/>
+</form>

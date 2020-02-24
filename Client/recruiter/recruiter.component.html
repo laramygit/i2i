@@ -1,0 +1,76 @@
+
+<div *ngIf="recruiters.length != 0; else noRecruiters">
+    <table border='1'>
+        <tr>
+            <th>SNO</th>
+            <th>NameOfOrganization</th>
+            <th>Description</th>
+            <th>WebsiteUrl</th>
+            <th>LandlineNumber</th>
+            <th>UserName</th>
+	        <th>CurrentPassword</th> 	
+            <th>Location</th>
+            <th>Delete</th>
+        </tr>
+        <tr *ngFor="let recruiter of recruiters">
+            <td>
+                <a href="#" (click)="readRecruiter(recruiter.id)">
+                    {{recruiter.id}}
+                </a>
+            </td>            
+            <td>{{recruiter.nameOfOrganization}}</td>
+            <td>{{recruiter.description}}</td>
+            <td>{{recruiter.websiteUrl}}</td>
+            <td>{{recruiter.landlineNumber}}</td>
+            <td>{{recruiter.userName}}</td>            
+            <td>{{recruiter.currentPassword}}</td>                  
+            <td>{{recruiter.location.name}}</td>
+            <td>
+                <a href="#" (click)="deleteRecruiter(recruiter.id)">
+                    Delete{{recruiter.id}}
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<ng-template #noRecruiters>No Recruiters</ng-template>
+<form [formGroup]="recruiterForm" (ngSubmit)="saveRecruiter()">
+    Name Of Organization: <input type="text" formControlName="nameOfOrganization"/>
+    <span *ngIf="nameOfOrganization.touched && nameOfOrganization.invalid">
+        NameOfOrganization is required one
+    </span> <br/>
+    Description: <input type="text" formControlName="description"/>
+    <span *ngIf="description.touched && description.invalid">
+        Description is required one
+    </span> <br/>
+    websiteUrl: <input type="text" formControlName="websiteUrl"/>
+    <span *ngIf="websiteUrl.touched && websiteUrl.invalid">
+        websiteUrl is required one
+    </span> <br/>
+    Landline Number: <input type="text" formControlName="landlineNumber"/>
+    <span *ngIf="landlineNumber.touched && landlineNumber.invalid">
+        landlineNumber is required one
+    </span> <br/>
+    UserName: <input type="text" formControlName="userName"/>
+    <span *ngIf="userName.touched && userName.invalid">
+        userName is required one
+    </span> <br/>
+    currentPassword: <input type="text" formControlName="currentPassword"/>
+    <span *ngIf="currentPassword.touched && currentPassword.invalid">
+        currentPassword is required one
+    </span> <br/>    
+    <div formGroupName="location">
+        Locations:
+        <select formControlName="id">
+            <option value="">Please select</option>
+            <option *ngFor="let location of locations" [value]="location.id">
+              {{location.name}}
+            </option>
+        </select> 
+        <span *ngIf="locationId.touched && locationId.invalid">
+            location is required one 
+        </span> <br/>
+    </div>
+    <input type="submit" value="submit"/>
+</form>
