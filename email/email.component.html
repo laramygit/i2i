@@ -1,0 +1,64 @@
+
+
+<div *ngIf= "emails.length != 0; else noEmails">
+    <table border = "1">
+        <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>jobSeekerId</th>
+            <th>Verified Status</th>
+        </tr>
+        <tr *ngFor= "let email of emails">
+            <td>
+                <a href="#"(click)="readEmail(email.id)"> {{email.id}}</a>
+            </td>
+
+
+            <td>{{email.email}}</td>
+            <td>{{email.jobSeeker.id}}</td>
+            <td>{{email.verifiedStatus}}</td>
+            
+
+
+            <td>
+                <a href="#"(click)="deleteEmail(email.id)">Delete {{email.name}}</a>
+             </td>
+
+        </tr>
+    </table>
+</div>
+
+<ng-template #noEmails>No Emails Available</ng-template>
+
+
+<form [formGroup]= "emailForm" (ngSubmit) = "saveEmail()">
+   Email: <input type= "text" formControlName= "email"/>
+    <span *ngIf= "email.touched && email.invalid">
+        Email is required
+    </span><br/>
+
+
+    VerifiedStatus: <input type= "radio" formControlName= "verifiedStatus" value="V"/> Valid &nbsp;
+                <input type= "radio" formControlName= "verifiedStatus" value="NV"/> InValid 
+        <span *ngIf=  "verifiedStatus.invalid">
+            VerifiedStatus is required
+        </span><br/>
+
+
+    <div formGroupName="jobSeeker">
+        Job Seekers:
+            <select formControlName="id">
+                <option value=""> Please select </option>
+                <option *ngFor="let jobSeeker of jobSeekers" [value]="jobSeeker.id">
+                    {{jobSeeker.email}}
+                </option>
+            </select>
+    <span *ngIf="jobSeekerId.touched && jobSeekerId.invalid">
+        Job Seekers is Required
+    </span>
+
+    </div>
+
+    <input type="submit" value="submit"/>
+
+</form>
