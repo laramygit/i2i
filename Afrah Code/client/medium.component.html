@@ -1,0 +1,44 @@
+<hr>
+<form [formGroup] = "mediumForm" (ngSubmit)="saveMedium()">
+
+     <h3>Fill the Form</h3>
+
+    Medium:  <input type="text" formControlName= "name"/>
+    <span *ngIf = "name.touched && name.invalid">
+        This field is required.
+    </span> <br/>
+
+    Medium Description: <input type= "text" formControlName= "mediumDesc"/>
+    <span *ngIf = "mediumDesc.touched && mediumDesc.invalid">
+       This field is required.
+    </span> <br/>
+    
+    <input type= "submit" value= "Enter Details"/>
+</form>
+
+<hr>
+
+<div *ngIf="mediums.length != 0; else noMedium">
+
+    <h3>Medium Details</h3>
+   
+    <table border='3'>
+        
+        <tr>
+            <th> ID </th>
+            <th> Medium </th>
+            <th> Description </th>
+            <th> Delete </th>
+        </tr>
+
+        <tr *ngFor= "let medium of mediums" >
+            <td> <a href="#" (click) = "readMedium(medium.id)" > {{medium.id}}</a> </td>
+            <td> {{medium.name}} </td>
+            <td> {{medium.mediumDesc}} </td>
+            <td> <a href = "#" (click) = "deleteMedium(medium.id)" > Delete </a> </td>
+        </tr>
+    </table>    
+</div>
+
+<ng-template #noMedium> No Data Available </ng-template>
+<hr>
