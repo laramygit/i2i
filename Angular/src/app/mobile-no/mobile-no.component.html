@@ -1,0 +1,57 @@
+ <form [formGroup]="mobileNoForm" (ngSubmit)="saveMobileNo()">
+  MOBILE NO : <input type="text" formControlName="mobileNo"/>
+        
+      <span *ngIf="mobileNo.touched && mobileNo.invalid">
+          Mobile No is required
+      </span><br/>
+      
+  VERIFIED STATUS: <input type="radio" formControlName="verifiedStatus" value="true"/> Verified &nbsp;
+          <input type="radio" formControlName="verifiedStatus" value="false"/> Not Verified 
+      <span *ngIf="verifiedStatus.invalid">
+          Status is required
+      </span><br/><br/> 
+
+  <div formGroupName="jobSeeker">
+JOB SEEKER:
+      <select formControlName="id">
+          <option value="">please select</option>
+           <option *ngFor ="let jobSeeker of jobSeekers" [value]="jobSeeker.id">
+                  {{jobSeeker.firstName}}
+      </option>
+  </select>
+  <span *ngIf="jobSeekerId.touched && jobSeekerId.invalid">
+      jobSeeker is required
+  </span>
+</div> 
+ <input type="submit" value="submit">  
+</form> 
+
+ <h1>Mobile No Table</h1>
+<div *ngIf="mobileNos; else noMobileNumbers">
+      <table border='3'>
+        <tr> 
+            <th>SNO</th>
+            <th>MOBILE NO</th>
+            <th>V STATUS</th>
+            <th>FIRST NAME</th>
+            <th>DELETE(?)</th>
+        </tr>
+       
+        <tr *ngFor="let mobileNumber of mobileNos">
+            <td>
+                <a href="#" (click)="readMobileNo(mobileNumber.id)">
+                    {{ mobileNumber.id }}
+                </a>
+            </td>    
+            <td>{{mobileNumber.mobileNo}}</td>
+            <td>{{mobileNumber.verifiedStatus}}</td>
+            <td>{{mobileNumber.jobSeeker.firstName}}</td>
+            <td>
+                <a href="#" (click)="deleteMobileNo(mobileNumber.id)">
+                        Delete              
+                </a>
+            </td> 
+        </tr>
+    </table>
+</div>
+<ng-template #noMobileNumber>No mobile Available</ng-template> 
