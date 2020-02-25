@@ -1,0 +1,40 @@
+<div *ngIf="instituteTypes.length != 0; else noInstituteTypes">
+
+    <table border="3">
+          <tr>
+                  <th>SNO</th>
+                  <th>INSTITUTE NAME</th>
+                  <th>INSTITUTE DESC</th>
+                  <th>DELETE(?)</th>
+              </tr>
+     <tr *ngFor="let instituteType of instituteTypes">
+       <td><a href="#" (click)="readInstitute(instituteType.id)">{{instituteType.instituteId}}</a></td>
+       <td>{{instituteType.instituteName}}</td>
+       <td>{{instituteType.instituteDesc}}</td>
+       <td><a href="#" (click)="deleteInstitute(instituteType.id)">DELETE</a></td>
+  
+     </tr>
+  
+    </table>
+  
+  </div>
+  <ng-template #noInstituteTypes>NO INSTITUTE AVAIABLE</ng-template>
+  
+
+
+
+<form [formGroup]="instituteTypeForm" (ngSubmit)="saveInstitute()">
+     
+    INSTITUTE NAME: <input type="text" formControlName="instituteName" /><br/>
+    <span *ngIf="instituteName.touched && instituteName.invalid">
+        Institute Name is Required one
+    </span><br/>
+  
+    INSTITUTE DESC: <input type="text" formControlName="instituteDesc" /><br/>
+    <span *ngIf="instituteDesc.touched && instituteDesc.invalid">
+        Institute Desc is Required one
+    </span><br/>
+
+    <input type="submit" value="submit" />
+
+    </form>

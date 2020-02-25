@@ -1,0 +1,135 @@
+<!-- <div *ngFor="let abc of jobSeekerExperiences">
+        {{abc.duration}}
+    </div> -->
+<div *ngIf="jobSeekerExperiences.length != 0; else noJobSeekerExperience">
+       
+     <table border="3">
+                <tr>
+                  <th>SNO</th>
+                  <th>DESIGNATION</th>
+                  <th>DURATION</th>
+                  <th>START DATE</th>
+                  <th>INSTITUTE TYPE</th>
+                  <th>EDUCATION BOARD</th>
+                  <th>JOB SEEKER</th>
+                  <th>DELETE(?)</th>
+              </tr>
+     <tr *ngFor="let jobSeekerExperience of jobSeekerExperiences">
+       <td><a href="#" (click)="readExperience(jobSeekerExperience.experienceId)">{{jobSeekerExperience.experienceId}}</a></td>
+       <td>{{jobSeekerExperience.designation}}</td>
+       <td>{{jobSeekerExperience.duration}}</td>
+       <td>{{jobSeekerExperience.startDate | date: 'dd/MM/yyyy'}}</td>
+       <td>{{jobSeekerExperience.instituteType.instituteName}}</td>
+       <td>{{jobSeekerExperience.educationBoard.eductionBoardName}}</td>
+       <td>{{jobSeekerExperience.jobSeeker.firstName}}</td>
+       <td><a href="#" (click)="deleteExperience(jobSeekerExperience.experienceId)">DELETE</a></td>
+  
+     </tr>
+    </table> 
+  
+  </div>
+  <ng-template #noJobSeekerExperience>NO JOBSEEKERS EXPERIENCE AVAIABLE</ng-template> 
+  <br/>
+
+  <form [formGroup]="jobSeekerExperienceForm" (ngSubmit)="saveExperience()">
+     
+    DESIGNATION: <input type="text" formControlName="designation" /><br/>
+    <span *ngIf="designation.touched && designation.invalid">
+        Designation is Required one
+    </span><br/>
+  
+    DURATION: <input type="text" formControlName="duration" /><br/>
+    <span *ngIf="duration.touched && duration.invalid">
+        Duration is Required one
+    </span><br/>
+     
+    START DATE: <input type="date" formControlName="startDate" /><br/>
+    <span *ngIf="startDate.touched && startDate.invalid">
+        StartDate is Required one
+    </span><br/> 
+  
+     <div formGroupName="instituteType">
+        INSTITUTE TYPES:
+        <select formControlName="instituteId">
+            <option value="">PLEASE SELECT</option>
+            <option *ngFor="let instituteType of instituteTypes" [value]="instituteType.instituteId">
+                {{instituteType.instituteName}}
+            </option>
+        </select><br/>
+        <span *ngIf="instituteTypeId.touched && instituteTypeId.invalid">
+                Institute Type is Required one
+              </span><br/>
+            
+ </div>  
+
+    <div formGroupName="educationBoard">
+    EDUCATION BOARD:
+    <select formControlName="educationBoardId">
+        <option value="">PLEASE SELECT</option>
+        <option *ngFor="let educationBoard of educationBoards" [value]="educationBoard.educationBoardId">
+            {{educationBoard.eductionBoardName}}
+        </option>
+    </select><br/>
+    <span *ngIf="educationBoardId.touched && educationBoardId.invalid">
+            EducationBoard is Required one
+          </span><br/>
+</div> 
+<br/>  
+
+   <div formGroupName="jobSeeker">
+    JOB SEEKER:
+    <select formControlName="id">
+        <option value="">PLEASE SELECT</option>
+        <option *ngFor="let jobSeeker of jobSeekers" [value]="jobSeeker.id">
+            {{jobSeeker.firstName}}
+        </option>
+    </select><br/>
+    <span *ngIf="jobSeekerId.touched && jobSeekerId.invalid">
+      JobSeeker is Required one
+    </span><br/>
+   </div>  
+ <input type="submit" value="submit" />  
+ 
+<!-- <div *ngFor="let jobSeeker of jobSeekers">
+    {{jobSeeker.id}}
+    {{jobSeeker.firstName}}
+</div> -->
+
+ 
+</form>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div formGroupName="educationBoard">
+    <ng-multiselect-dropdown>
+        name="eductionBoardName"
+        [palaceholder]="'Select Board'"
+        [data]="educationBoards"
+        [disabled]="disabled"
+        [settings]="dropdownSettings"
+        (onSelect)="onItemSelect($event)"
+    </ng-multiselect-dropdown>
+    <br/>
+    EDUCATION BOARD:
+    <select formControlName="educationBoardId">
+        <option value="">PLEASE SELECT</option>
+        <option *ngFor="let educationBoard of educationBoards" [value]="educationBoard.educationBoardId">
+            {{educationBoard.eductionBoardName}}
+        </option>
+    </select><br/>
+
+    <span *ngIf="educationBoardId.touched && educationBoardId.invalid">
+            EducationBoard is Required one
+          </span><br/>
+        
+</div> --> 
