@@ -1,0 +1,28 @@
+
+<div *ngIf="educationBoards.length != 0; else noEducationBoards">
+
+    <table border="3">
+          <tr>
+                  <th>SNO</th>
+                  <th>EDUCATION BOARD NAME</th>
+                  <th>DELETE(?)</th>
+              </tr>
+     <tr *ngFor="let educationBoard of educationBoards">
+       <td><a href="#" (click)="readBoard(educationBoard.id)">{{educationBoard.educationBoardId}}</a></td>
+       <td>{{educationBoard.eductionBoardName}}</td>
+       <td><a href="#" (click)="deleteBoard(educationBoard.id)">DELETE</a></td>
+  
+     </tr>
+  
+    </table>
+  
+  </div>
+  <ng-template #noEducationBoards>NO EDUCATION BOARD AVAIABLE</ng-template>
+
+<form [formGroup]="educationBoardForm" (ngSubmit)="saveBoard()">
+  EDUCATIONBOARD NAME:
+  <input type="text" formControlName="eductionBoardName" /><br />
+  <span *ngIf="eductionBoardName.touched && eductionBoardName.invalid">
+    Education Board Name is Required one </span><br />
+    <input type="submit" value="submit" />
+</form>

@@ -1,0 +1,152 @@
+
+<div *ngIf="jobSeekers.length != 0; else noJobSeekers">
+
+  <table border="3">
+        <tr>
+                <th>SNO</th>
+                <th>FIRST NAME</th>
+                <th>LAST NAME</th>
+                <th>DOB</th>
+                <th>GENDER</th>
+                <th>IS MARRIRD</th>
+                <th>JOB TYPE</th>
+                <th>PROFILE PIC URL</th>
+                <th>AadharNo</th>
+                <th>PAN NO</th>
+                <th>CURRENT LOCATIONS</th>
+                <th>YEAR OF EXPERIENCE</th>
+                <th>PROFILE SUMMERY</th>
+                <th>EMAIL</th>
+                <th>PASSWORD</th>
+                <th>DELETE(?)</th>
+            </tr>
+   <tr *ngFor="let jobSeeker of jobSeekers">
+     <td><a href="#" (click)="readJobSeeker(jobSeeker.id)">{{jobSeeker.id}}</a></td>
+     <td>{{jobSeeker.firstName}}</td>
+     <td>{{jobSeeker.lastName}}</td>
+     <td>{{jobSeeker.dob | date: 'dd/MM/yyyy'}}</td>
+     <td>{{jobSeeker.gender}}</td>
+     <td>{{jobSeeker.isMarried}}</td>
+     <td>{{jobSeeker.jobType.name}}</td>
+     <td>{{jobSeeker.profilePicUrl}}</td>
+     <td>{{jobSeeker.aadharNo}}</td>
+     <td>{{jobSeeker.panNo}}</td>
+     <td>{{jobSeeker.currentLocation.name}}</td>
+     <td>{{jobSeeker.yearsOfExp}}</td>
+     <td>{{jobSeeker.profileSummary}}</td>
+     <td>{{jobSeeker.email}}</td>
+     <td>{{jobSeeker.currentPassword}}</td>
+     <td><a href="#" (click)="deleteJobSeeker(jobSeeker.id)">DELETE</a></td>
+
+   </tr>
+
+
+  </table>
+
+</div>
+<ng-template #noJobSeekers>NO JOBSEEKERS AVAIABLE</ng-template>
+
+
+
+<form [formGroup]="jobSeekerForm" (ngSubmit)="saveJobSeeker()">
+
+  FIRST NAME: <input type="text" formControlName="firstName" /><br/>
+  <span *ngIf="firstName.touched && firstName.invalid">
+      First Name is Required one
+  </span><br/>
+
+  LAST NAME: <input type="text" formControlName="lastName" /><br/>
+  <span *ngIf="lastName.touched && lastName.invalid">
+      Last Name is Required one
+  </span><br/>
+   
+  DOB: <input type="date" formControlName="dob" /><br/>
+  <span *ngIf="dob.touched && dob.invalid">
+      Dob is Required one
+  </span><br/>
+
+  GENDER(?): <input type="radio" formControlName="gender" value="m" />Male &nbsp;
+  <input type="radio" formControlName="gender" value="f" />Female &nbsp;
+   <br/>
+  <span *ngIf="gender.invalid">
+      Gender is Required one
+  </span><br/>
+
+  MARRIED STATUS(?): <input type="radio" formControlName="isMarried" [value]="true" />Married &nbsp;
+  <input type="radio" formControlName="isMarried" [value]="false" />Un-Married &nbsp;
+   <br/>
+  <span *ngIf="isMarried.invalid">
+    isMarried is Required one
+  </span><br/>
+
+ 
+ <div formGroupName="jobType">
+        JOB TYPES:
+        <select formControlName="id">
+            <option value="">PLEASE SELECT</option>
+            <option *ngFor="let jobType of jobTypes" [value]="jobType.id">
+                {{jobType.name}}
+            </option>
+        </select><br/>
+        <span *ngIf="jobTypeId.touched && jobTypeId.invalid">
+                Job Type is Required one
+              </span><br/>
+            
+ </div>
+
+ <br/>
+ PROFILE PICTURE URL: <input type="text" formControlName="profilePicUrl" /><br/>
+  <span *ngIf="profilePicUrl.touched && profilePicUrl.invalid">
+      Profile Picture  is Required one
+  </span><br/>
+
+  AADHAR NUMBER: <input type="text" formControlName="aadharNo" /><br/>
+  <span *ngIf="aadharNo.touched && aadharNo.invalid">
+        AadharNo is Required one
+  </span><br/>
+
+  PAN NUMBER: <input type="text" formControlName="panNo" /><br/>
+  <span *ngIf="panNo.touched && panNo.invalid">
+        PAN is Required one
+  </span><br/>
+
+
+  <div formGroupName="currentLocation">
+        LOCATIONS:
+        <select formControlName="id">
+            <option value="">PLEASE SELECT</option>
+            <option *ngFor="let location of locations" [value]="location.id">
+                {{location.name}}
+            </option>
+        </select><br/>
+        <span *ngIf="locationId.touched && locationId.invalid">
+                Location is Required one
+              </span><br/>
+  </div>
+  <br/>
+
+  EXPERIANCE: <input type="text" formControlName="yearsOfExp" /><br/>
+  <span *ngIf="yearsOfExp.touched && yearsOfExp.invalid">
+        Experience is Required one
+  </span><br/>
+
+  PROFILE SUMMARY: <textarea type="text" formControlName="profileSummary" rows="5" cols="15"></textarea><br/>
+  <span *ngIf="profileSummary.touched && profileSummary.invalid">
+        Profile Summery is Required one
+  </span><br/>
+
+  EMAIL: <input type="email" formControlName="email" /><br/>
+  <span *ngIf="email.touched && email.invalid">
+        Email is Required one
+  </span><br/>
+
+  PASSWORD: <input type="password" formControlName="currentPassword" /><br/>
+  <span *ngIf="currentPassword.touched && currentPassword.invalid">
+        Password is Required one
+  </span><br/>
+
+  <input type="submit" value="submit" />
+  
+</form>
+
+
